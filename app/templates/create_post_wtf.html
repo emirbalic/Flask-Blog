@@ -1,0 +1,21 @@
+<!-- templates/create_post.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Create a New Post</h1>
+
+    <form method="POST" action="{{ url_for('create_post') }}">
+        {{ form.hidden_tag() }}
+        <div>
+            <label for="title">Title</label>
+            {{ form.title(class='form-control') }}
+        </div>
+        <div>
+            <label for="content">Content</label>
+            {{ form.content(class='form-control') }}
+        </div>
+        <button type="submit" class="btn btn-primary">Create Post</button>
+    </form>
+
+    <a href="{{ url_for('home') }}" class="btn btn-secondary mt-3">Back to Home</a>
+{% endblock %}

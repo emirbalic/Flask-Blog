@@ -1,30 +1,49 @@
 from flask import render_template, request, redirect, url_for, flash
 from . import db  # Import db from app.py
 from .models import Post  # Import Post model directly
+from .forms import PostForm
 
 # Home route
 def home():
     posts = Post.query.all()  # Fetch all posts from the database
     return render_template('home.html', posts=posts)
 
-# Create post route
+# Create post route with the form
 def create_post():
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
+    form = PostForm()
 
-        # Form validation
-        if not title or not content:
-            flash("Both title and content are required!")
-            return redirect(url_for('create_post'))
+    if form.validate_on_submit():  # Check if the form is submitted and valid
+        title = form.title.data
+        content = form.content.data
 
+        # Create a new post object and add it to the database
         new_post = Post(title=title, content=content)
         db.session.add(new_post)
         db.session.commit()
 
-        return redirect(url_for('home'))  # Redirect to home after creating a post
+        flash('Post Created!', 'success')
+        return redirect(url_for('home'))  # Redirect to the home page after creating a post
 
-    return render_template('create_post.html')
+    return render_template('create_post_wtf.html', form=form)
+
+# # Create post route
+# def create_post():
+#     if request.method == 'POST':
+#         title = request.form['title']
+#         content = request.form['content']
+#
+#         # Form validation
+#         if not title or not content:
+#             flash("Both title and content are required!")
+#             return redirect(url_for('create_post'))
+#
+#         new_post = Post(title=title, content=content)
+#         db.session.add(new_post)
+#         db.session.commit()
+#
+#         return redirect(url_for('home'))  # Redirect to home after creating a post
+#
+#     return render_template('create_post.html')
 
 # About route
 def about():
