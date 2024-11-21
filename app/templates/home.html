@@ -11,10 +11,10 @@
     <div class="posts-list">
         <!-- Loop through each post and display its content -->
         {% for post in posts %}
-            <div class="post">
+            <div class="post-card">
                 <h2>{{ post.title }}</h2>  <!-- Display the post title -->
                 <p>{{ post.content }}</p>  <!-- Display the post content -->
-                <small>Posted on: {{ post.date_posted }}</small>  <!-- Display the date -->
+                <small class="date">Posted on: {{ post.date_posted }}</small>  <!-- Display the date -->
             </div>
         {% endfor %}
     </div>

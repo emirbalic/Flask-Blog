@@ -11,4 +11,5 @@ class Config:
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///instance/blog.db'  # Use relative path to SQLite database
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # Disable modification tracking for SQLAlchemy
     # Adjusting to absolute path to make sure it's correctly resolved
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'instance', 'blog.db')
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'instance', 'blog.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), '..', 'instance', 'blog.db')
