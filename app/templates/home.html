@@ -15,6 +15,7 @@
                 <h2><a href="{{ url_for('post_detail', post_id=post.id) }}">{{ post.title }}</a></h2>  <!-- Link to the individual post -->
                 <p>{{ post.content[:150] }}...</p>  <!-- Show a snippet of the content -->
                 <small class="date">Posted on: {{ post.date_posted }}</small>  <!-- Display the date -->
+<!--                <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn btn-warning">Edit</a>-->
             </div>
         {% endfor %}
     </div>

@@ -8,5 +8,6 @@
         <p>{{ post.content }}</p>
         <small class="date">Posted on: {{ post.date_posted }}</small>
     </div>
+<a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn btn-warning">Edit Post</a>
 <a href="{{ url_for('home') }}" class="btn-back">← Back to Home</a>
 {% endblock %}

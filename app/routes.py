@@ -26,6 +26,8 @@ def create_post():
 
     return render_template('create_post_wtf.html', form=form)
 
+
+
 # # Create post route
 # def create_post():
 #     if request.method == 'POST':
@@ -53,10 +55,28 @@ def post_detail(post_id):
     post = Post.query.get_or_404(post_id)  # Get the post by ID or return a 404 if not found
     return render_template('post_detail.html', post=post)
 
+
+# Edit post route
+def edit_post(post_id):
+    post = Post.query.get_or_404(post_id)  # Fetch the post by its ID
+    form = PostForm(obj=post)  # Pre-populate the form with the existing post data
+
+    if request.method == 'POST' and form.validate_on_submit():
+        post.title = form.title.data  # Update the post title
+        post.content = form.content.data  # Update the post content
+
+        db.session.commit()  # Save the changes to the database
+
+        flash('Post updated successfully!', 'success')
+        return redirect(url_for('home'))  # Redirect back to the home page
+
+    return render_template('edit_post.html', form=form, post=post)
+
 # Register routes
 def register_routes(app):
     app.add_url_rule('/', 'home', home)
     app.add_url_rule('/create', 'create_post', create_post, methods=['GET', 'POST'])
     app.add_url_rule('/about', 'about', about)
     app.add_url_rule('/post/<int:post_id>', 'post_detail', post_detail)  # Dynamic route for post detail
+    app.add_url_rule('/edit/<int:post_id>', 'edit_post', edit_post, methods=['GET', 'POST'])  # New edit route
 
