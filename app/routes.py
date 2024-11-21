@@ -72,6 +72,15 @@ def edit_post(post_id):
 
     return render_template('edit_post.html', form=form, post=post)
 
+# @app.route('/post/delete/<int:post_id>', methods=['POST'])
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)  # Fetch the post by ID or return 404 if not found
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post deleted successfully!', 'success')
+    return redirect(url_for('home'))
+
+
 # Register routes
 def register_routes(app):
     app.add_url_rule('/', 'home', home)
@@ -79,4 +88,5 @@ def register_routes(app):
     app.add_url_rule('/about', 'about', about)
     app.add_url_rule('/post/<int:post_id>', 'post_detail', post_detail)  # Dynamic route for post detail
     app.add_url_rule('/edit/<int:post_id>', 'edit_post', edit_post, methods=['GET', 'POST'])  # New edit route
+    app.add_url_rule('/post/delete/<int:post_id>', 'delete_post', delete_post, methods=['POST'])
 
