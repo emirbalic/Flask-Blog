@@ -1,24 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+from models import db, Post  # Import db and Post from models.py
+from config import Config  # Import the config class
+# from .routes import register_routes
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'  # SQLite database
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = 'secret'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'  # SQLite database
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.secret_key = 'secret'
+app.config.from_object(Config)
 
-db = SQLAlchemy(app)
 
-# Blog Post Model
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)  # Primary key
-    title = db.Column(db.String(100), nullable=False)  # Title (max 100 characters)
-    content = db.Column(db.Text, nullable=False)  # Post content
-    date_posted = db.Column(db.DateTime, default=datetime.utcnow)  # Default to current time
+db.init_app(app)  # Initialize db with the app#
 
-    def __repr__(self):
-        return f"<Post {self.title}>"
+
 @app.route('/')
 def home():
     posts = Post.query.all()  # Fetch all posts from the database
@@ -39,7 +35,7 @@ def create_post():
         db.session.add(new_post)
         db.session.commit()
 
-        return redirect(url_for('index'))
+        return redirect(url_for('home'))
 
     return render_template('create_post.html')
 @app.route('/about')
