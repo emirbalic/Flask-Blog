@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Blog{% endblock %}
+
+{% block content %}
+{% if posts %}
+    <div class="posts-list">
+        <!-- Loop through each post and display its content -->
+        {% for post in posts %}
+            <div class="post">
+                <h2>{{ post.title }}</h2>  <!-- Display the post title -->
+                <p>{{ post.content }}</p>  <!-- Display the post content -->
+                <small>Posted on: {{ post.date_posted }}</small>  <!-- Display the date -->
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No posts available yet. Add one to get started!</p>
+{% endif %}
+{% endblock %}
