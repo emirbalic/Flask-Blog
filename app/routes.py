@@ -30,8 +30,14 @@ def create_post():
 def about():
     return render_template('about.html')
 
+def post_detail(post_id):
+    post = Post.query.get_or_404(post_id)  # Get the post by ID or return a 404 if not found
+    return render_template('post_detail.html', post=post)
+
 # Register routes
 def register_routes(app):
     app.add_url_rule('/', 'home', home)
     app.add_url_rule('/create', 'create_post', create_post, methods=['GET', 'POST'])
     app.add_url_rule('/about', 'about', about)
+    app.add_url_rule('/post/<int:post_id>', 'post_detail', post_detail)  # Dynamic route for post detail
+
