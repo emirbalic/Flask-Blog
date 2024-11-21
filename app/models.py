@@ -1,7 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
-
-# Create a new instance of the SQLAlchemy class
-db = SQLAlchemy()
+from datetime import datetime
+from . import db
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -9,5 +7,3 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
